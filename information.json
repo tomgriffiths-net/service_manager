@@ -1,0 +1,8 @@
+{
+    "id_name": "service_manager",
+    "version": 2,
+    "author": "tom",
+    "name": "Service Manager for Windows",
+    "description": "",
+    "dependencies": []
+}
