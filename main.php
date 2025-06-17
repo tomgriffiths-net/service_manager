@@ -22,34 +22,34 @@ class service_manager{
         }
     }
     public static function start_service(string $serviceName):bool{
-        mklog('general','Starting service ' . $serviceName,false);
+        mklog(1,'Starting service ' . $serviceName);
         if(!is_admin::check()){
-            mklog('warning','Failed to start service due to a permission error',false);
+            mklog(2,'Failed to start service due to a permission error');
             return false;
         }
 
-        exec("net start " . $serviceName . " >nul 2>&1",$output,$resultCode);
-        if(self::resultCodeToBool($resultCode)){
+        exec("net start " . $serviceName . " >nul 2>&1", $output, $exitCode);
+        if($exitCode === 0){
             return true;
         }
         else{
-            mklog('warning','Failed to start service ' . $serviceName . ': ' . $resultCode,false);
+            mklog(2,'Failed to start service ' . $serviceName . ': ' . $exitCode);
         }
         return false;
     }
     public static function stop_service(string $serviceName):bool{
-        mklog('general','Stoping service ' . $serviceName,false);
+        mklog(1,'Stoping service ' . $serviceName);
         if(!is_admin::check()){
-            mklog('warning','Failed to stop service due to a permission error',false);
+            mklog(2,'Failed to stop service due to a permission error');
             return false;
         }
 
-        exec("net stop " . $serviceName . " >nul 2>&1",$output,$resultCode);
-        if(self::resultCodeToBool($resultCode)){
+        exec("net stop " . $serviceName . " >nul 2>&1", $output, $exitCode);
+        if($exitCode === 0){
             return true;
         }
         else{
-            mklog('warning','Failed to stop service ' . $serviceName . ': ' . $resultCode,false);
+            mklog(2,'Failed to stop service ' . $serviceName . ': ' . $exitCode);
         }
         return false;
     }
@@ -61,28 +61,20 @@ class service_manager{
         }
         return false;
     }
-    private static function resultCodeToBool(int $resultCode):bool{
-        if($resultCode === 0){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
     public static function delete_service(string $serviceName):bool{
-        mklog('general','Deleting service ' . $serviceName,false);
+        mklog(1,'Deleting service ' . $serviceName);
         if(!is_admin::check()){
-            mklog('warning','Failed to delete service due to a permission error',false);
+            mklog(2,'Failed to delete service due to a permission error');
             return false;
         }
 
-        exec('sc delete ' . $serviceName,$output,$resultCode);
-        if(self::resultCodeToBool($resultCode)){
-            mklog('general','Deleted service ' . $serviceName,false);
+        exec('sc delete ' . $serviceName, $output, $exitCode);
+        if($exitCode === 0){
+            mklog(1,'Deleted service ' . $serviceName);
             return true;
         }
         else{
-            mklog('warning','Failed to delete service ' . $serviceName . ': ' . $resultCode,false);
+            mklog(2,'Failed to delete service ' . $serviceName . ': ' . $exitCode);
         }
         return false;
     }
