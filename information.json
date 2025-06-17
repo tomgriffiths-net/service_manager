@@ -4,5 +4,7 @@
     "version": 4,
     "author": "tom",
     "description": "",
-    "dependencies": []
+    "dependencies": {
+        "is_admin": 1
+    }
 }
